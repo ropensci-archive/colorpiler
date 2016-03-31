@@ -13,6 +13,8 @@ scale_color_farben(name, ...)
 scale_fill_farben(name, ...)
 }
 \arguments{
+\item{name}{Name of palette.}
+
 \item{...}{Arguments passed on to discrete_scale to control name, limits,
 breaks, labels and so forth.}
 }
@@ -20,9 +22,11 @@ breaks, labels and so forth.}
 farben colour palettes for ggplot2
 }
 \examples{
-library(ggplot2)
-ggplot(mtcars, aes(x = mpg, y = hp, colour = factor(cyl))) +
-  geom_point() +
-  scale_colour_farben("example")
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  library(ggplot2)
+  ggplot(mtcars, aes(x = mpg, y = hp, colour = factor(cyl))) +
+    geom_point() +
+    scale_colour_farben("wes_a_fave")
+}
 }
 

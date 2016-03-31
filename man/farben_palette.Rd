@@ -2,22 +2,20 @@
 % Please edit documentation in R/farben.R
 \name{farben_palette}
 \alias{farben_palette}
-\title{solarized colour palette}
+\title{farben_palette}
 \usage{
 farben_palette(palette_name)
 }
 \arguments{
-\item{num_values}{Number of values to colour. If more than 9, colours start
-to repeat.}
+\item{palette_name}{Name of palette.}
 }
 \description{
-Provides a colour scheme based on the
-\href{http://ethanschoonover.com/solarized}{solarized} accent colours.
+farben_palette
 }
 \examples{
 if (requireNamespace("scales", quietly = TRUE)) {
   library(scales)
-  show_col(farben_palette("example"))
+  show_col(farben_palette("wes_a_fave")(9))
 }
 }
 

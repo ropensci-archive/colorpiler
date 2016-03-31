@@ -4,8 +4,12 @@ Title: Provides community-driven color palettes
 Version: 0.1.0
 Authors@R: c(person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut", "cre")))
 Description: Provides community-driven color palettes
-License: MIT
+License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
-    jsonlite
+  ggplot2,
+  jsonlite,
+  RCurl
+Suggests:
+  scales
 RoxygenNote: 5.0.1
