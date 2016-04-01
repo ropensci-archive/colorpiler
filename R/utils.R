@@ -16,3 +16,14 @@ download_file <- function(url, dest) {
   }
   invisible(dest)
 }
+
+subsample <- function(n, max) {
+  if (n > max) {
+    stop(sprintf("Too many colours selected (max is %d, requested %d)",
+                 max, n))
+  } else if (n == max) {
+    seq_len(n)
+  } else {
+    as.integer(seq(1, max, length.out=n))
+  }
+}

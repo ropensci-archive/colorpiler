@@ -15,5 +15,6 @@ Imports:
   storr
 Suggests:
   ggplot2,
-  scales
+  scales,
+  testthat
 RoxygenNote: 5.0.1
