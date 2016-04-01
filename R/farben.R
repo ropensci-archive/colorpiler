@@ -10,8 +10,9 @@
 #' @export
 farben_palette <- function(palette_name) {
   palette_data <- farben_palette_data(palette_name)
+  max <- length(palette_data$colors)
   function(num_values) {
-    palette_data$colors[1:num_values]
+    palette_data$colors[subsample(num_values, max)]
   }
 }
 
