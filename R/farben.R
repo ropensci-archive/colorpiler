@@ -9,14 +9,16 @@
 #' }
 #' @export
 farben_palette <- function(palette_name) {
+  palette_data <- farben_palette_data(palette_name)
   function(num_values) {
-    palette_url <- sprintf(
-      "https://raw.githubusercontent.com/vsbuffalo/farbenfroh/master/palettes/%s.json",
-      palette_name
-    )
-    palette_data <- jsonlite::fromJSON(httr::content(httr::GET(palette_url), as = "text"))
     palette_data$colors[1:num_values]
   }
+}
+
+#' @export
+#' @rdname farben_palette
+farben_palette_data <- function(palette_name) {
+  env$st$get(palette_name)
 }
 
 #' farben colour palettes for ggplot2
@@ -49,4 +51,18 @@ scale_color_farben <- function(name, ...) {
 scale_fill_farben <- function(name, ...) {
   ggplot2::discrete_scale(aesthetics = "fill", scale_name = "farben",
                           palette = farben_palette(name), ...)
+}
+
+fetch_hook_farben <- function(key, namespace) {
+  if (!isTRUE(unname(capabilities("libcurl")))) {
+    stop("This vignette requires libcurl support in R to run")
+  }
+  fmt <- "https://raw.githubusercontent.com/vsbuffalo/farbenfroh/master/palettes/%s.json"
+  path <- tempfile("farben_")
+  on.exit(file.remove(path))
+  code <- download.file(sprintf(fmt, key), path, method="libcurl")
+  if (code != 0L) {
+    stop("Error downloading file")
+  }
+  jsonlite::fromJSON(read_file(path))
 }

@@ -2,9 +2,12 @@
 % Please edit documentation in R/farben.R
 \name{farben_palette}
 \alias{farben_palette}
+\alias{farben_palette_data}
 \title{farben palette}
 \usage{
 farben_palette(palette_name)
+
+farben_palette_data(palette_name)
 }
 \arguments{
 \item{palette_name}{Name of palette.}

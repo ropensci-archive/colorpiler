@@ -8,6 +8,7 @@ OPTIONAL <- c('github_user', 'keywords', 'description')
 #'
 #' @param repo_dir directory of palette repository
 #' @param fun function to apply over files
+#' @param ... further arguments passed to \code{fun}
 palette_pply <- function(repo_dir, fun, ...) {
   files <- list.files(repo_dir, pattern="*.json", full.names=TRUE)
   lapply(files, fun, ...)
@@ -47,5 +48,3 @@ metadata <- function(repo_dir) {
     format_palette(js)
   }))
 }
-
-

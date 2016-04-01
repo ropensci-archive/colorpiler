@@ -6,13 +6,14 @@ Authors@R: c(person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("
              person("Karthik", "Ram", email = "k@karthik.io", role = c("aut")),
              person("Vince", "Buffalo", email = "vsbuffalo@gmail.com", role = c("aut")),
              person("Rich", "FitzJohn", email = "rich.fitzjohn@gmail.com", role = c("aut")))
-Description: Provides community-driven color palettes
+Description: Provides community-driven color palettes.
 License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
-  ggplot2,
   jsonlite,
-  httr
+  rappdirs,
+  storr
 Suggests:
+  ggplot2,
   scales
 RoxygenNote: 5.0.1

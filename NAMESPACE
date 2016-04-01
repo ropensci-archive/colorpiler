@@ -2,6 +2,7 @@
 
 export(create_palette)
 export(farben_palette)
+export(farben_palette_data)
 export(metadata)
 export(scale_color_farben)
 export(scale_colour_farben)

@@ -10,6 +10,8 @@ palette_pply(repo_dir, fun, ...)
 \item{repo_dir}{directory of palette repository}
 
 \item{fun}{function to apply over files}
+
+\item{...}{further arguments passed to \code{fun}}
 }
 \description{
 Apply function over palettes
