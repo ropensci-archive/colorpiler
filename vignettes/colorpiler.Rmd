@@ -1,58 +1,71 @@
 ---
-title: "Farben"
+title: "colorpile"
 author: "Mika Braginsky"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+runtime: shiny
 vignette: >
-  %\VignetteIndexEntry{Farben}
+  %\VignetteIndexEntry{colorpile}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
-
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
-
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output:
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side.
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```{r, include=FALSE}
+library(colorpiler)
+library(knitr)
+library(ggplot2)
+library(shiny)
+theme_set(theme_bw())
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+[Colorpile](https://github.com/ropenscilabs/colorpile) is a community-driven repository for color palettes. Color palettes are stored as `json` files containing the palette's colors and associated metadata. The [colorpiler](https://github.com/ropenscilabs/colorpiler) package lets users access and search these color palettes, use them in `ggplot2` plots and elsewhere, contribute their own palettes.
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+## Access and search
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+The `colorpile_metadata` function gives a data frame with all metadata about all of the color palettes in colorpile.
 
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+```{r}
+head(colorpile_metadata())
 ```
 
-Also a quote using `>`:
+To get only those palettes that match certain search criteria, use the `search_colorpile` function to filter palettes by author(s), github username, or type.
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+```{r}
+search_colorpile(authors = c("Karthik Ram", "Ethan Schoonover"))
+search_colorpile(authors = "Cynthia Brewer", type = "diverging")
+```
+
+Once you know the name of the color palette you want, use `colorpile_palette` to generate a function that gives a set of colors for a number of values.
+
+```{r}
+darjeeling <- colorpile_palette("Darjeeling")
+darjeeling(3)
+darjeeling(5)
+```
+
+## Viewing and plotting
+
+_TODO: describe viewing gadget_
+
+`colorpiler` provides color and fill scales for `ggplot2`. Just pass any `colorpiler` palette name to `scale_color_colorpile` or `scale_fill_colorpile`.
+
+```{r, fig.show='hide'}
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point() +
+  scale_color_colorpile("Darjeeling")
+```
+
+```{r, echo=FALSE}
+selectInput("palette", label = "Palette",
+            choices = as.character(colorpile_metadata()$name),
+            selected = "Darjeeling")
+renderPlot({
+  ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+    geom_point(size = 3) +
+    scale_color_colorpile(input$palette)
+}, width = 600, height = 400)
+```
+
+## Contribute
+
+_TODO: describe contribution process_

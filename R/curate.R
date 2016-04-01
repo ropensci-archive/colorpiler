@@ -82,7 +82,7 @@ colorpile_metadata <- function() {
 #'
 #' @examples
 #' search_colorpile(authors = c("Karthik Ram", "Ethan Schoonover"))
-#' search_colorpile(author = "Cynthia Brewer", type = "diverging")
+#' search_colorpile(authors = "Cynthia Brewer", type = "diverging")
 search_colorpile <- function(authors = NULL, github_user = NULL, type = NULL) {
   filtered_palettes <- colorpile_metadata()
   if (!is.null(authors)) {
