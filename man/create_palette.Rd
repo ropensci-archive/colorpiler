@@ -4,8 +4,8 @@
 \alias{create_palette}
 \title{Create palette for farbenfroh}
 \usage{
-create_palette(name, authors, colors = NULL, type = NULL,
-  github_user = NULL, description = Sys.Date(), keywords, date)
+create_palette(name, authors, colors, type, github_user = NULL,
+  description = NULL, keywords = NULL, date = Sys.Date())
 }
 \arguments{
 \item{name}{The short name of the colour scheme}
@@ -14,7 +14,7 @@ create_palette(name, authors, colors = NULL, type = NULL,
 
 \item{colors}{Vector of colors, each in hex format}
 
-\item{type}{One of "divergent", "qualitative", "sequential", "other"}
+\item{type}{One of 'divergent', 'qualitative', 'sequential', 'other'}
 
 \item{github_user}{The GitHub username of the palette's author (or primary author if there is more than one name in authors)}
 

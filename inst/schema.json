@@ -19,11 +19,11 @@
             },
             "uniqueItems": true,
             "required": true,
-            "minLength": 1
+            "minItems": 1
         },
 
         "github_user": {
-"description": "The GitHub username of the palette's author (or primary author if there is more than one name in authors)",
+            "description": "The GitHub username of the palette's author (or primary author if there is more than one name in authors)",
             "type": "string",
             "required": false
         },
