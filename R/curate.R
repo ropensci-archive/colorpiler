@@ -41,13 +41,13 @@ format_palette  <- function(json) {
 colorpile_metadata <- function() {
   if (is.null(env$metadata)) {
     path <-
-      download_file("https://github.com/vsbuffalo/farbenfroh/archive/master.zip",
+      download_file("https://github.com/ropenscilabs/colorpile/archive/master.zip",
                     tempfile())
     dest <- tempfile()
     unzip(path, exdir = dest)
     file.remove(path)
     ## This is the path we want:
-    path <- file.path(dest, "farbenfroh-master", "palettes")
+    path <- file.path(dest, "colorpile-master", "palettes")
     re <- "\\.json$"
     files <- dir(path, pattern = re)
 

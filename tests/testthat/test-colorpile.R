@@ -1,8 +1,8 @@
-context("farben")
+context("colorpiler")
 
-test_that("farben_palette basics", {
-  p <- farben_palette("BottleRocket")
-  expect_is(p, "farben_palette")
+test_that("colorpile_palette basics", {
+  p <- colorpile_palette("BottleRocket")
+  expect_is(p, "colorpile_palette")
   expect_true(is.function(p))
 
   expect_error(p(100), "Too many colours")

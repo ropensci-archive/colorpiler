@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_palette.R
 \name{create_palette}
 \alias{create_palette}
-\title{Create palette for farbenfroh}
+\title{Create palette for colorpile}
 \usage{
 create_palette(name, authors, colors, type, github_user = NULL,
   description = NULL, keywords = NULL, date = Sys.Date())
@@ -25,6 +25,6 @@ create_palette(name, authors, colors, type, github_user = NULL,
 \item{date}{Date scheme was created or modified}
 }
 \description{
-create palette for farbenfroh
+create palette for colorpile
 }
 

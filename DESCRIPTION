@@ -1,4 +1,4 @@
-Package: farben
+Package: colorpiler
 Type: Package
 Title: Provides community-driven color palettes
 Version: 0.1.0
