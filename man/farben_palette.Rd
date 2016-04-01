@@ -2,7 +2,7 @@
 % Please edit documentation in R/farben.R
 \name{farben_palette}
 \alias{farben_palette}
-\title{farben_palette}
+\title{farben palette}
 \usage{
 farben_palette(palette_name)
 }
@@ -10,7 +10,7 @@ farben_palette(palette_name)
 \item{palette_name}{Name of palette.}
 }
 \description{
-farben_palette
+farben palette
 }
 \examples{
 if (requireNamespace("scales", quietly = TRUE)) {

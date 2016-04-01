@@ -1,4 +1,4 @@
-#' farben_palette
+#' farben palette
 #'
 #' @param palette_name Name of palette.
 #'
@@ -10,8 +10,10 @@
 #' @export
 farben_palette <- function(palette_name) {
   function(num_values) {
-    palette_url <- sprintf("https://raw.githubusercontent.com/vsbuffalo/farbenfroh/master/%s.json",
-                           palette_name)
+    palette_url <- sprintf(
+      "https://raw.githubusercontent.com/vsbuffalo/farbenfroh/master/%s.json",
+      palette_name
+    )
     palette_data <- jsonlite::fromJSON(RCurl::getURL(palette_url))
     palette_data$colors[1:num_values]
   }
@@ -47,4 +49,34 @@ scale_color_farben <- function(name, ...) {
 scale_fill_farben <- function(name, ...) {
   ggplot2::discrete_scale(aesthetics = "fill", scale_name = "farben",
                           palette = farben_palette(name), ...)
+}
+
+
+#' create palette for farbenfroh
+#'
+#' @param name String for palette name (non-zero length alpha-numeric)
+#' @param author Character vector of name(s) of palette author(s)
+#' @param github_user String for palette's author's GitHub username
+#' @param description String for palette's description
+#' @param keywords Character vector of palette keywords
+#' @param colors Character vector of palette colors
+#' @param type One of "divergent", "qualitative", "sequential", "other"
+#' @param group String for palette's group
+#'
+#' @export
+#'
+#' @examples
+create_palette <- function(name, author, github_user = "", description = "",
+                           keywords = "", colors, type) {
+  palette_data <- list(name = jsonlite::unbox(name),
+                       author = paste(keywords, collapse = "; "),
+                       github_user = jsonlite::unbox(github_user),
+                       description = jsonlite::unbox(description),
+                       keywords = paste(keywords, collapse = "; "),
+                       date = jsonlite::unbox(Sys.Date()),
+                       version = jsonlite::unbox("1.0"),
+                       colors = colors,
+                       type = jsonlite::unbox(type))
+  palette_str <- jsonlite::toJSON(palette_data, pretty = TRUE)
+  write(palette_str, file = sprintf("%s.json", name))
 }

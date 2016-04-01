@@ -1,5 +1,5 @@
 # curate.R -- curate JSON palettes
-COLS <- c('author', 'github_user', 'group', 'type',
+COLS <- c('name', 'author', 'github_user', 'group', 'type',
           'description', 'keywords', 'date', 'version')
 OPTIONAL <- c('github_user', 'keywords', 'description')
 
@@ -37,10 +37,14 @@ format_palette  <- function(json) {
   df
 }
 
-#' 
-metadata_df <- function(repo_dir) {
+#' Palette set metadata
+#'
+#' @export
+metadata <- function(repo_dir) {
   do.call(rbind, palette_pply(repo_dir, function(f) {
     js <- jsonlite::fromJSON(readLines(f), simplifyDataFrame=TRUE)
     format_palette(js)
   }))
 }
+
+
