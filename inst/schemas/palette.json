@@ -1,0 +1,72 @@
+{
+    "title": "colorpile",
+    "description": "colorpile palette format",
+    "type": "object",
+
+    "properties": {
+        "name": {
+            "description": "The short name of the colour scheme",
+            "type": "string",
+            "pattern:": "^[^ /]+$",
+            "required": true
+        },
+
+        "authors": {
+            "description": "vector of name(s) of palette author(s)",
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "uniqueItems": true,
+            "required": true,
+            "minItems": 1
+        },
+
+        "github_user": {
+            "description": "The GitHub username of the palette's author (or primary author if there is more than one name in authors)",
+            "type": "string",
+            "required": false
+        },
+
+        "description": {
+            "description": "A description, possibly longer than the name",
+            "type": "string",
+            "required": false
+        },
+
+        "keywords": {
+            "description": "Vector of palette keywords",
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "uniqueItems": true,
+            "required": false
+        },
+
+        "date": {
+            "description": "Date scheme was created or modified",
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "required": true
+        },
+
+        "colors": {
+            "description": "Vector of colors, each in hex format",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "pattern": "^#[A-Fa-f0-9]{6}$"
+            },
+            "minItems": 1,
+            "required": true
+        },
+
+        "type": {
+            "description": "One of \"diverging\", \"qualitative\", \"sequential\", \"other\"",
+            "type": "string",
+            "pattern": "^(sequential|diverging|qualitative|other)$",
+            "required": true
+        }
+    }
+}

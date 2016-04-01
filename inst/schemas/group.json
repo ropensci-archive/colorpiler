@@ -1,8 +1,7 @@
 {
-    "title": "colorpile",
-    "description": "colorpile palette format",
+    "title": "colorpiler_groups",
+    "description": "colorpile group format",
     "type": "object",
-
     "properties": {
         "name": {
             "description": "The short name of the colour scheme",
@@ -12,7 +11,7 @@
         },
 
         "authors": {
-            "description": "vector of name(s) of palette author(s)",
+            "description": "vector of name(s) of palette group author(s)",
             "type": "array",
             "items": {
                 "type": "string"
@@ -23,7 +22,7 @@
         },
 
         "github_user": {
-            "description": "The GitHub username of the palette's author (or primary author if there is more than one name in authors)",
+            "description": "The GitHub username of the palette group's author (or primary author if there is more than one name in authors)",
             "type": "string",
             "required": false
         },
@@ -35,7 +34,7 @@
         },
 
         "keywords": {
-            "description": "Vector of palette keywords",
+            "description": "Vector of palette group keywords",
             "type": "array",
             "items": {
                 "type": "string"
@@ -44,28 +43,14 @@
             "required": false
         },
 
-        "date": {
-            "description": "Date scheme was created or modified",
-            "type": "string",
-            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
-            "required": true
-        },
-
-        "colors": {
-            "description": "Vector of colors, each in hex format",
+        "palettes": {
+            "description": "Vector of palette names, each in hex format",
             "type": "array",
             "items": {
                 "type": "string",
-                "pattern": "^#[A-Fa-f0-9]{6}$"
+                "pattern": "^[^ /]+$"
             },
             "minItems": 1,
-            "required": true
-        },
-
-        "type": {
-            "description": "One of \"divergent\", \"qualitative\", \"sequential\", \"other\"",
-            "type": "string",
-            "pattern": "^(sequential|diverging|qualitative|other)$",
             "required": true
         }
     }

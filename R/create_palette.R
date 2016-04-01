@@ -6,7 +6,7 @@
 #' @param name The short name of the colour scheme
 #' @param authors vector of name(s) of palette author(s)
 #' @param colors Vector of colors, each in hex format
-#' @param type One of 'divergent', 'qualitative', 'sequential', 'other'
+#' @param type One of 'diverging', 'qualitative', 'sequential', 'other'
 #' @param github_user The GitHub username of the palette's author (or primary author if there is more than one name in authors)
 #' @param description A description, possibly longer than the name
 #' @param keywords Vector of palette keywords

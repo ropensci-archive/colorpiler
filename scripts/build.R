@@ -53,5 +53,7 @@ create_palette <- function(%s) {
   writeLines(gsub("\\s\n", "\n", str), dest)
 }
 
-curl::curl_download("https://raw.githubusercontent.com/ropenscilabs/colorpile/master/schema.json", "inst/schema.json")
-generate_create_palette("inst/schema.json", "R/create_palette.R")
+dir.create("inst/schemas", FALSE, TRUE)
+curl::curl_download("https://raw.githubusercontent.com/ropenscilabs/colorpile/master/schemas/group.json", "inst/schemas/group.json")
+curl::curl_download("https://raw.githubusercontent.com/ropenscilabs/colorpile/master/schemas/palette.json", "inst/schemas/palette.json")
+generate_create_palette("inst/schemas/palette.json", "R/create_palette.R")
