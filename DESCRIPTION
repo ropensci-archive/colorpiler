@@ -10,6 +10,7 @@ Description: Provides community-driven color palettes.
 License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
+  crayon,
   jsonlite,
   rappdirs,
   storr

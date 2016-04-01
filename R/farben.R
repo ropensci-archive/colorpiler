@@ -11,9 +11,11 @@
 farben_palette <- function(palette_name) {
   palette_data <- farben_palette_data(palette_name)
   max <- length(palette_data$colors)
-  function(num_values) {
+  ret <- function(num_values=max) {
     palette_data$colors[subsample(num_values, max)]
   }
+  class(ret) <- "farben_palette"
+  ret
 }
 
 #' @export
@@ -60,4 +62,15 @@ fetch_hook_farben <- function(key, namespace) {
   on.exit(file.remove(path))
   download_file(sprintf(fmt, key), path)
   jsonlite::fromJSON(read_file(path))
+}
+
+#' @export
+print.farben_palette <- function(x, ...) {
+  bg <- x()
+  fg <- ifelse(rgb2hsv(col2rgb(bg))["v", ] > 0.7, "black", "white")
+  str <- sprintf("<a farben palette of %d colors:>\n%s\n",
+                 length(bg),
+                 paste0("\t", mapply(crayon::style, bg, fg, bg),
+                        collapse="\n"))
+  cat(str)
 }
