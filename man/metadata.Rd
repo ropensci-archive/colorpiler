@@ -4,10 +4,7 @@
 \alias{metadata}
 \title{Palette set metadata}
 \usage{
-metadata(repo_dir)
-}
-\arguments{
-\item{repo_dir}{Path to directory with farbenbroh repository}
+metadata()
 }
 \description{
 Palette set metadata
