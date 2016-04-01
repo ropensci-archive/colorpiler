@@ -3,3 +3,4 @@
 ^Makefile$
 scripts/
 ^colorpiler_.*\.tar\.gz$
+^\.travis\.yml$
