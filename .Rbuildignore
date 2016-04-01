@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 ^Makefile$
 scripts/
+^farben_.*\.tar\.gz$

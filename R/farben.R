@@ -5,7 +5,7 @@
 #' @examples
 #' if (requireNamespace("scales", quietly = TRUE)) {
 #'   library(scales)
-#'   show_col(farben_palette("wes_a_fave")(9))
+#'   show_col(farben_palette("Royal1")(4))
 #' }
 #' @export
 farben_palette <- function(palette_name) {
@@ -24,6 +24,14 @@ farben_palette_data <- function(palette_name) {
   env$st$get(palette_name)
 }
 
+##' Purge the cache of downloaded palettes.
+##' @title Purge farben cache
+##' @export
+farben_purge_cache <- function() {
+  env$st$destroy()
+  .onLoad()
+}
+
 #' farben colour palettes for ggplot2
 #'
 #' @param name Name of palette.
@@ -35,7 +43,7 @@ farben_palette_data <- function(palette_name) {
 #'   library(ggplot2)
 #'   ggplot(mtcars, aes(x = mpg, y = hp, colour = factor(cyl))) +
 #'     geom_point() +
-#'     scale_colour_farben("wes_a_fave")
+#'     scale_colour_farben("Royal1")
 #' }
 #' @export
 scale_colour_farben <- function(name, ...) {

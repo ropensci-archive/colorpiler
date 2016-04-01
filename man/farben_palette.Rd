@@ -18,7 +18,7 @@ farben palette
 \examples{
 if (requireNamespace("scales", quietly = TRUE)) {
   library(scales)
-  show_col(farben_palette("wes_a_fave")(9))
+  show_col(farben_palette("Royal1")(4))
 }
 }
 
