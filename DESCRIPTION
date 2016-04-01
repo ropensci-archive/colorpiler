@@ -5,7 +5,8 @@ Version: 0.1.0
 Authors@R: c(person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut", "cre")),
              person("Karthik", "Ram", email = "k@karthik.io", role = c("aut")),
              person("Vince", "Buffalo", email = "vsbuffalo@gmail.com", role = c("aut")),
-             person("Rich", "FitzJohn", email = "rich.fitzjohn@gmail.com", role = c("aut")))
+             person("Rich", "FitzJohn", email = "rich.fitzjohn@gmail.com", role = c("aut")),
+	     person("Francois", "Michonneau", email = "francois.michonneau@gmail.com", role = c("aut")))
 Description: Provides community-driven color palettes.
 License: MIT + file LICENSE
 LazyData: TRUE
@@ -13,7 +14,9 @@ Imports:
   crayon,
   jsonlite,
   rappdirs,
-  storr
+  storr,
+  shiny,
+  miniUI
 Suggests:
   ggplot2,
   scales,
