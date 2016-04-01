@@ -1,8 +1,6 @@
 # curate.R -- curate JSON palettes
-COLS <- c('name', 'author', 'github_user', 'group', 'type',
-          'description', 'keywords', 'date', 'version')
+COLS <- c('name', 'authors', 'github_user', 'type', 'date')
 OPTIONAL <- c('github_user', 'keywords', 'description')
-
 
 #' Apply function over palettes
 #'
@@ -10,8 +8,7 @@ OPTIONAL <- c('github_user', 'keywords', 'description')
 #' @param fun function to apply over files
 #' @param ... further arguments passed to \code{fun}
 palette_pply <- function(repo_dir, fun, ...) {
-  files <- list.files(repo_dir, pattern="*.json", full.names=TRUE)
-  lapply(files, fun, ...)
+  lapply(list.files(repo_dir, pattern="\\.json$", full.names=TRUE), fun, ...)
 }
 
 try_join <- function(items) {
@@ -40,11 +37,34 @@ format_palette  <- function(json) {
 
 #' Palette set metadata
 #'
-#' @param repo_dir Path to directory with farbenbroh repository
 #' @export
-metadata <- function(repo_dir) {
-  do.call(rbind, palette_pply(repo_dir, function(f) {
-    js <- jsonlite::fromJSON(readLines(f), simplifyDataFrame=TRUE)
-    format_palette(js)
-  }))
+metadata <- function() {
+  if (is.null(env$metadata)) {
+    path <-
+      download_file("https://github.com/vsbuffalo/farbenfroh/archive/master.zip",
+                    tempfile())
+    dest <- tempfile()
+    unzip(path, exdir=dest)
+    file.remove(path)
+    ## This is the path we want:
+    path <- file.path(dest, "farbenfroh-master", "palettes")
+    re <- "\\.json$"
+    files <- dir(path, pattern=re)
+
+    pals <- sub(re, "", files)
+    names(files) <- pals
+
+    for (i in setdiff(pals, env$st$list())) {
+      env$st$set(i, jsonlite::fromJSON(read_file(file.path(path, files[[i]]))))
+    }
+
+    env$metadata <- path
+  } else {
+    path <- env$metadata
+  }
+
+  read_pal <- function(f) {
+    format_palette(jsonlite::fromJSON(read_file(f), simplifyDataFrame=TRUE))
+  }
+  do.call(rbind, palette_pply(path, read_pal))
 }

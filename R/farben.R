@@ -54,15 +54,9 @@ scale_fill_farben <- function(name, ...) {
 }
 
 fetch_hook_farben <- function(key, namespace) {
-  if (!isTRUE(unname(capabilities("libcurl")))) {
-    stop("This vignette requires libcurl support in R to run")
-  }
   fmt <- "https://raw.githubusercontent.com/vsbuffalo/farbenfroh/master/palettes/%s.json"
   path <- tempfile("farben_")
   on.exit(file.remove(path))
-  code <- download.file(sprintf(fmt, key), path, method="libcurl")
-  if (code != 0L) {
-    stop("Error downloading file")
-  }
+  download_file(sprintf(fmt, key), path)
   jsonlite::fromJSON(read_file(path))
 }
