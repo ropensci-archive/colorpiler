@@ -1,4 +1,4 @@
 library(testthat)
-library(farben)
+library(colorpiler)
 
-test_check("farben")
+test_check("colorpiler")

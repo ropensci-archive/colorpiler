@@ -1,6 +1,6 @@
 {
-    "title": "farbenfroh",
-    "description": "farbenfroh thing",
+    "title": "colorpile",
+    "description": "colorpile palette format",
     "type": "object",
 
     "properties": {
