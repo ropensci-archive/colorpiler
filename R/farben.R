@@ -11,10 +11,10 @@
 farben_palette <- function(palette_name) {
   function(num_values) {
     palette_url <- sprintf(
-      "https://raw.githubusercontent.com/vsbuffalo/farbenfroh/master/%s.json",
+      "https://raw.githubusercontent.com/vsbuffalo/farbenfroh/master/palettes/%s.json",
       palette_name
     )
-    palette_data <- jsonlite::fromJSON(RCurl::getURL(palette_url))
+    palette_data <- jsonlite::fromJSON(httr::content(httr::GET(palette_url), as = "text"))
     palette_data$colors[1:num_values]
   }
 }
@@ -61,7 +61,6 @@ scale_fill_farben <- function(name, ...) {
 #' @param keywords Character vector of palette keywords
 #' @param colors Character vector of palette colors
 #' @param type One of "divergent", "qualitative", "sequential", "other"
-#' @param group String for palette's group
 #'
 #' @export
 #'

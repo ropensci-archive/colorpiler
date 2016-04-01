@@ -12,7 +12,7 @@ LazyData: TRUE
 Imports:
   ggplot2,
   jsonlite,
-  RCurl
+  httr
 Suggests:
   scales
 RoxygenNote: 5.0.1

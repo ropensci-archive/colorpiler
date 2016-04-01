@@ -21,8 +21,6 @@ create_palette(name, author, github_user = "", description = "",
 \item{colors}{Character vector of palette colors}
 
 \item{type}{One of "divergent", "qualitative", "sequential", "other"}
-
-\item{group}{String for palette's group}
 }
 \description{
 create palette for farbenfroh

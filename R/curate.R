@@ -39,6 +39,7 @@ format_palette  <- function(json) {
 
 #' Palette set metadata
 #'
+#' @param repo_dir Path to directory with farbenbroh repository
 #' @export
 metadata <- function(repo_dir) {
   do.call(rbind, palette_pply(repo_dir, function(f) {
