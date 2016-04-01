@@ -3,7 +3,6 @@ title: "colorpile"
 author: "Mika Braginsky"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
-runtime: shiny
 vignette: >
   %\VignetteIndexEntry{colorpile}
   %\VignetteEngine{knitr::rmarkdown}
@@ -45,27 +44,38 @@ darjeeling(5)
 
 ## Viewing and plotting
 
-_TODO: describe viewing gadget_
+Run the gadget `browse_colorpile` on a character vector of palette names to see what they look like.
+
+```{r, eval=FALSE}
+browse_colorpile(search_colorpile(github_user = "karthik"))
+```
+
+Or run the gadget `demo_colorpile` to see what a sample plot looks like with various palettes.
+
+```{r, eval=FALSE}
+demo_colorpile()
+```
 
 `colorpiler` provides color and fill scales for `ggplot2`. Just pass any `colorpiler` palette name to `scale_color_colorpile` or `scale_fill_colorpile`.
 
-```{r, fig.show='hide'}
+```{r, fig.width=6, fig.height=4}
 ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
   geom_point() +
   scale_color_colorpile("Darjeeling")
 ```
 
-```{r, echo=FALSE}
-selectInput("palette", label = "Palette",
-            choices = as.character(colorpile_metadata()$name),
-            selected = "Darjeeling")
-renderPlot({
-  ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
-    geom_point(size = 3) +
-    scale_color_colorpile(input$palette)
-}, width = 600, height = 400)
-```
-
 ## Contribute
 
-_TODO: describe contribution process_
+To create a color palette, pass `create_palette` all of the metadata about your palette and character vector of its colors.
+
+```{r, eval=FALSE}
+create_palette(name = "best_ever",
+               authors = "Alyssa P. Hacker",
+               github_user = "ahacker",
+               description = "Provides the best color palette of all time!",
+               keywords = "awesome",
+               colors = c("#000000", "#00FF00"),
+               type = "qualitative")
+```
+
+This will create a `json` file specifying your palette, which you can then submit to colorpile by creating a pull request (stay tuned for this to happen automatically!).

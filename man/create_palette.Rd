@@ -14,7 +14,7 @@ create_palette(name, authors, colors, type, github_user = NULL,
 
 \item{colors}{Vector of colors, each in hex format}
 
-\item{type}{One of 'divergent', 'qualitative', 'sequential', 'other'}
+\item{type}{One of 'diverging', 'qualitative', 'sequential', 'other'}
 
 \item{github_user}{The GitHub username of the palette's author (or primary author if there is more than one name in authors)}
 

@@ -1,3 +1,8 @@
+##' Browse colorpile palettes
+##'
+##' @param pal Character vector of palette names
+##' @export
+##'
 ##' @importFrom shiny uiOutput imageOutput renderUI observeEvent stopApp brushedPoints renderPlot runGadget
 ##' @importFrom miniUI miniPage gadgetTitleBar miniContentPanel
 browse_colorpile <- function(pal) {

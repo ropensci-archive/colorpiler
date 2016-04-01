@@ -21,6 +21,6 @@ Filters the palettes in colorpile down to those that match search terms
 }
 \examples{
 search_colorpile(authors = c("Karthik Ram", "Ethan Schoonover"))
-search_colorpile(author = "Cynthia Brewer", type = "diverging")
+search_colorpile(authors = "Cynthia Brewer", type = "diverging")
 }
 
