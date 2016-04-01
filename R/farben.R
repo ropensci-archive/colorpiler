@@ -24,6 +24,14 @@ farben_palette_data <- function(palette_name) {
   env$st$get(palette_name)
 }
 
+##' Purge the cache of downloaded palettes.
+##' @title Purge farben cache
+##' @export
+farben_purge_cache <- function() {
+  env$st$destroy()
+  .onLoad()
+}
+
 #' farben colour palettes for ggplot2
 #'
 #' @param name Name of palette.
