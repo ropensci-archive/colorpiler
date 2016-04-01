@@ -1,51 +1,25 @@
-# curate.R -- curate JSON palettes
-COLS <- c('name', 'authors', 'github_user', 'type', 'date')
-OPTIONAL <- c('github_user', 'keywords', 'description')
-
-#' Apply function over palettes
-#'
-#' @param repo_dir directory of palette repository
-#' @param fun function to apply over files
-#' @param ... further arguments passed to \code{fun}
-palette_pply <- function(repo_dir, fun, ...) {
-  lapply(list.files(repo_dir, pattern = "\\.json$", full.names = TRUE), fun, ...)
-}
-
-try_join <- function(items) {
-  if (length(items) > 1L)
-    return(paste(items, collapse = ";"))
-  return(items)
-}
-
-format_palette  <- function(json) {
-  # merge authors
-  cnames <- names(json)
-  df <- as.data.frame(lapply(COLS, function(col) {
-          if (!(col %in% cnames)) {
-            if (!(col %in% OPTIONAL))
-              stop("non-optional key missing; did this pass validation?")
-            else
-              val <- NA
-          } else {
-            val <- json[[col]]
-          }
-          try_join(val)
-  }))
-  colnames(df) <- COLS
-  df
-}
-
-#' Palette set metadata
+#' Palette metadata
 #'
 #' @export
 colorpile_metadata <- function() {
-  if (is.null(env$metadata)) {
-    path <-
-      download_file("https://github.com/ropenscilabs/colorpile/archive/master.zip",
-                    tempfile())
+  st <- env$st
+  if (is.null(env$sha)) {
+    env$sha <- github_colorpile_sha()
+  }
+  sha <- env$sha
+  ok <- (st$exists("colorpile_sha", "internal") &&
+         st$get("colorpile_sha", "internal") == sha)
+
+  if (!ok) {
+    path_zip <-
+      download_file("https://github.com/ropenscilabs/colorpile/archive/master.zip")
     dest <- tempfile()
-    unzip(path, exdir = dest)
-    file.remove(path)
+    unzip(path_zip, exdir = dest)
+    on.exit({
+      unlink(dest, recursive=TRUE)
+      file.remove(path_zip)
+    })
+
     ## This is the path we want:
     path <- file.path(dest, "colorpile-master", "palettes")
     re <- "\\.json$"
@@ -55,18 +29,37 @@ colorpile_metadata <- function() {
     names(files) <- pals
 
     for (i in setdiff(pals, env$st$list())) {
-      env$st$set(i, jsonlite::fromJSON(read_file(file.path(path, files[[i]]))))
+      st$set(i, jsonlite::fromJSON(read_file(file.path(path, files[[i]]))))
     }
 
-    env$metadata <- path
-  } else {
-    path <- env$metadata
+    st$set("contents", pals, "internal")
+
+    data <- lapply(pals, st$get)
+
+    schema <- jsonlite::fromJSON(read_file(
+      system.file("schemas/palette.json", package="colorpiler")))
+    type <- vapply(schema$properties, function(x) x$type, character(1))
+    is_array <- type == "array"
+    cols <- setdiff(names(type), "colors")
+
+    data <- lapply(data, function(x) x[cols])
+
+    f <- function(x) {
+      if (is_array[[x]]) {
+        I(lapply(data, "[[", x))
+      } else {
+        ## should use vapply and a bit more work
+        sapply(data, "[[", x)
+      }
+    }
+
+    ret <- as.data.frame(setNames(lapply(cols, f), cols),
+                         stringsAsFactors=FALSE)
+    st$set("metadata", ret, "internal")
+    st$set("colorpile_sha", sha, "internal")
   }
 
-  read_pal <- function(f) {
-    format_palette(jsonlite::fromJSON(read_file(f), simplifyDataFrame = TRUE))
-  }
-  do.call(rbind, c(palette_pply(path, read_pal)))
+  st$get("metadata", "internal")
 }
 
 #' Search colorpile palettes

@@ -2,11 +2,11 @@
 % Please edit documentation in R/curate.R
 \name{colorpile_metadata}
 \alias{colorpile_metadata}
-\title{Palette set metadata}
+\title{Palette metadata}
 \usage{
 colorpile_metadata()
 }
 \description{
-Palette set metadata
+Palette metadata
 }
 

@@ -29,6 +29,7 @@ colorpile_palette_data <- function(palette_name) {
 ##' @export
 colorpile_purge_cache <- function() {
   env$st$destroy()
+  env$sha <- NULL
   .onLoad()
 }
 
@@ -36,7 +37,7 @@ fetch_hook_colorpiler <- function(key, namespace) {
   fmt <- "https://raw.githubusercontent.com/ropenscilabs/colorpile/master/palettes/%s.json"
   path <- tempfile("colorpiler_")
   on.exit(file.remove(path))
-  download_file(sprintf(fmt, key), path)
+  download_file(sprintf(fmt, key), dest=path)
   jsonlite::fromJSON(read_file(path))
 }
 

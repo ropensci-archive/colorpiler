@@ -12,6 +12,7 @@ License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
   crayon,
+  httr,
   jsonlite,
   rappdirs,
   storr,
