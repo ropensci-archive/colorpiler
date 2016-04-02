@@ -1,48 +1,74 @@
-##' Browse colorpile palettes
-##'
-##' @param pal Character vector of palette names
-##' @export
-##'
-##' @importFrom shiny uiOutput imageOutput renderUI observeEvent stopApp brushedPoints renderPlot runGadget
-##' @importFrom miniUI miniPage gadgetTitleBar miniContentPanel
+#' Browse colorpile palettes
+#'
+#' @param pal Character vector of palette names
+#' @export
+#'
+#' @importFrom shiny uiOutput renderUI observeEvent stopApp runGadget tags
+#' @importFrom miniUI miniPage gadgetTitleBar miniContentPanel
 browse_colorpile <- function(pal) {
 
-    ui <- miniPage(
-        gadgetTitleBar("Palette browser"),
-        miniContentPanel(
-            uiOutput("plot", height = "100%")
-        )
+  if (missing(pal)) {
+    stop("You must pass a colour palette", call. = FALSE)
+  }
+
+  css <- "
+  .palette-box { cursor: pointer; text-align: center; font-weight: bold; }
+  .palette-box:hover .palette-table { opacity: 0.9; }
+  .palette-table { height: 300px; width: 100%; margin-bottom: 40px; }
+  .palette-name { font-size: 1.2em; }"
+
+  jscode <- "
+  shinyjs.init = function() {
+    $(document).click('.palette-box', function(e) {
+      var paletteName = $(e.target).closest('.palette-box').data('name');
+      Shiny.onInputChange('paletteSelected', paletteName);
+    });
+  };
+  "
+
+  ui <- miniPage(
+    shinyjs::useShinyjs(),
+    shinyjs::inlineCSS(css),
+    shinyjs::extendShinyjs(text = jscode, functions = c()),
+    gadgetTitleBar("Palette browser"),
+    miniContentPanel(
+      uiOutput("palettes", height = "100%")
     )
+  )
 
-    server <- function(input, output, session) {
+  server <- function(input, output, session) {
 
-        each_palette <- function(pal) {
-            lapply(seq_along(pal), function(i) {
-                n <- length(pal[[i]]$colors)
-                cols <- pal[[i]]$colors
-                output[[paste0("pal", i)]] <- renderPlot({
-                    image(seq_len(n), 1, as.matrix(seq_len(n)), col = cols,
-                          xlab = "", ylab = "", xaxt = "n", yaxt = "n", bty = "n",
-                          main = pal[[i]]$name)
-
-                    fg <- ifelse(rgb2hsv(col2rgb(cols))["v", ] > 0.7, "black", "white")
-                    text(seq_len(n), 1, labels = cols, col = fg)
-                })
-            })
-        }
-
-        draw_palette <- function(pal_name, ...) {
-            pal_data <- lapply(pal_name, colorpile_palette_data)
-            lapply(seq_along(each_palette(pal_data)), function(i) {
-                imageOutput(paste0("pal", i))
-            })
-        }
-
-        output$plot <- renderUI({
-            draw_palette(pal)
-        })
-
+    draw_palette <- function(pal_data) {
+      div(
+        class = "palette-box",
+        `data-name` = pal_data$name,
+        div(class = "palette-name", pal_data$name),
+        tags$table(class = "palette-table", tags$tbody(tags$tr(
+          lapply(pal_data$colors, function(x) {
+            if (rgb2hsv(col2rgb(x))["v", ] > 0.7) {
+              fg <- "black"
+            } else {
+              fg <- "white"
+            }
+            tags$td(x,
+                    style = paste0("background: ", x, "; color: ", fg))
+          })
+        )))
+      )
     }
 
-    runGadget(ui, server)
+    output$palettes <- renderUI({
+      lapply(pal, function(x) {
+        pal_data <- colorpile_palette_data(x)
+        draw_palette(pal_data)
+      })
+    })
+
+    observeEvent(input$paletteSelected, {
+      cat(input$paletteSelected, "\n")
+      shinyjs::info(paste0("Selected ", input$paletteSelected))
+    })
+  }
+
+  runGadget(ui, server)
 }
