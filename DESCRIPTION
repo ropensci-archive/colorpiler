@@ -6,7 +6,7 @@ Authors@R: c(person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("
              person("Karthik", "Ram", email = "k@karthik.io", role = c("aut")),
              person("Vince", "Buffalo", email = "vsbuffalo@gmail.com", role = c("aut")),
              person("Rich", "FitzJohn", email = "rich.fitzjohn@gmail.com", role = c("aut")),
-	     person("Francois", "Michonneau", email = "francois.michonneau@gmail.com", role = c("aut")))
+	           person("Francois", "Michonneau", email = "francois.michonneau@gmail.com", role = c("aut")))
 Description: Provides community-driven color palettes.
 License: MIT + file LICENSE
 LazyData: TRUE
@@ -17,6 +17,7 @@ Imports:
   rappdirs,
   storr,
   shiny,
+  shinyjs (>= 0.5.2),
   miniUI
 Suggests:
   ggplot2,
